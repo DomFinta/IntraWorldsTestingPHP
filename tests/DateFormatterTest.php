@@ -9,6 +9,21 @@ class DateFormatterTest extends TestCase {
     public function setUp() :void
     {
         $this->dateFormatter = new DateFormatter;
+
+    }
+
+    public function testConstructor() 
+    {
+        $testClass = new DateFormatter;
+        $this->assertEquals("Afternoon", $testClass->partOfDay);
+
+        $format = 'Y-m-d H:i:s';
+        $date = DateTime::createFromFormat($format, '2020-02-15 00:00:00');
+        $testClass = new DateFormatter($date);
+        $this->assertEquals("Night", $testClass->partOfDay);
+
+        $testClass = new DateFormatter("asdasd");
+        $this->assertEquals("Afternoon", $testClass->partOfDay);
     }
 
     public function testCurrenTimeNight() 
@@ -41,16 +56,6 @@ class DateFormatterTest extends TestCase {
         {
             $this->assertEquals('Evening', $this->dateFormatter->getPartOfDay($i));
         }
-    }
-
-    /**
-     * Checking wrong input
-     * @expectedException InvalidArgumentException
-     */
-    public function testInput()
-    {
-        $this->dateFormatter->getPartOfDay("asda");
-        $this->dateFormatter->getPartOfDay(true);
     }
 
 }

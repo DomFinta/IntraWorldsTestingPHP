@@ -8,13 +8,19 @@ use InvalidArgumentException;
 
 class DateFormatter
 {
-    public function getCurrentHour() : void
-    {
-        $dateTime = new DateTime;
-        $currentHour = $dateTime->format('G');
-        $currentHour = $this->getCurrentHour();
 
-        $this->getPartOfDay($currentHour);
+    public $partOfDay;
+    
+    public function __construct($dateTime = false)
+    {
+        if(!$dateTime || !is_a($dateTime, 'DateTime')) {
+            date_default_timezone_set('Europe/Prague');
+            $dateTime = new DateTime;
+        }
+        $currentHour = $dateTime->format('G');
+
+        $this->partOfDay = $this->getPartOfDay($currentHour);
+
     }
 
     /**
